@@ -111,7 +111,7 @@ if(pagoFinal =="1"){
                             total += producto.precio;
                         });
                         if (productos.length > 1) {
-                            total *= 0.9; // Aplica el descuento del 10% si hay más de un producto
+                            total *= 0.9; 
                         }
                         return total;
                     };
