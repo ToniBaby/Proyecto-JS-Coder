@@ -1,10 +1,10 @@
-
+/* 
  
 let total = 0;
  
  let compra = prompt ("Desea comprar un producto? (s-si / n-no)");
 while(compra == "s" || compra == "S"){
-    let producto = prompt("1- PC-Gamer $ 180000 \n2- Silla-Gamer $ 80000 \n3- Audiculares-Xpro $ 16000 \n4- Teclado-Xpro $ 12000 \n5- Moouse-Xpro $ 10000 \n6- Monitor $ 50000 ");
+    let producto = prompt("1- PC-Gamer $ 180000 \n2- Silla-Gamer $ 80000 \n3- Auriculares-Xpro $ 16000 \n4- Teclado-Xpro $ 12000 \n5- Moouse-Xpro $ 10000 \n6- Monitor $ 50000 ");
       switch(producto){
         case "1":
             alert("Agregaste PC-Gamer al carro ... $ 180000 ");
@@ -15,7 +15,7 @@ while(compra == "s" || compra == "S"){
             incrementarTotal(80000)
             break;        
         case "3":
-            alert("Agregaste Audiculares-Xpro ... $ 16000 ");
+            alert("Agregaste Auriculares-Xpro ... $ 16000 ");
             incrementarTotal(16000)
             break;  
         case "4":
@@ -61,4 +61,85 @@ if(pagoFinal =="1"){
 
  mensajeFinal = prompt("Muchas gracias por tu compra");
 
- 
+  */
+
+
+     const listaProductos = [
+    { 
+        id: 1,  
+        nombre: "PC-Gamer",
+        precio: 180000
+    },
+    {  
+        id: 2,
+        nombre: "Silla-Gamer", 
+        precio: 80000 
+    },
+    {  
+        id: 3,  
+        nombre: "Auriculares-Xpro", 
+        precio: 16000
+    },
+    { 
+        id: 4,  
+        nombre: "Teclado-Xpro", 
+        precio: 12000
+    },
+    {  
+        id: 5,  
+        nombre: "Moouse-Xpro", 
+        precio: 10000
+    },
+    {  
+        id: 6,  
+        nombre: "Monitor", 
+        precio: 50000
+    }
+                    ];
+   
+                    const generarMensaje = () => {
+                        let mensaje = "";
+                        listaProductos.forEach(p => {
+                            mensaje += `${p.id} - ${p.nombre}\n`;
+                        });
+                        return mensaje;
+                    };
+                    
+                    const calcularTotal = (productos) => {
+                        let total = 0;
+                        productos.forEach(producto => {
+                            total += producto.precio;
+                        });
+                        if (productos.length > 1) {
+                            total *= 0.9; // Aplica el descuento del 10% si hay más de un producto
+                        }
+                        return total;
+                    };
+                    
+                    const comprarProductos = () => {
+                        const productosComprados = [];
+                        let seguirComprando = true;
+                        while (seguirComprando) {
+                            const mensaje = generarMensaje();
+                            const idProducto = parseInt(prompt("Ingrese el ID del producto a comprar:\n" + mensaje));
+                            const producto = listaProductos.find(p => p.id === idProducto);
+                            if (producto) { 
+                                productosComprados.push(producto);
+                                const respuesta = prompt("¿Desea seguir comprando? (Ingrese 'si' o 'no')").toLowerCase();
+                                while (respuesta !== "si" && respuesta !== "no") {
+                                    respuesta = prompt("Respuesta inválida. ¿Desea seguir comprando? (Ingrese 'si' o 'no')").toLowerCase();
+                                }
+                                if (respuesta === "no") {
+                                    seguirComprando = false;
+                                }
+                            } else {
+                                alert("ID ingresado no válido");
+                            }
+                        }
+                        const totalSinDescuento = calcularTotal(productosComprados);
+                        const totalConDescuento = totalSinDescuento * 0.9;
+                        const descuento = totalSinDescuento - totalConDescuento;
+                        alert(`Gracias por su compra!\n\nTotal de la compra: $${totalSinDescuento}\nDescuento: $${descuento}\nTotal a pagar: $${totalConDescuento}`);
+                    };
+                    
+                    comprarProductos();
